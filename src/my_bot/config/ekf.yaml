@@ -1,0 +1,44 @@
+# ~/iot_ws/src/my_bot/config/ekf.yaml
+
+ekf_filter_node:
+  ros__parameters:
+    # We'll publish our filter output at 30 Hz
+    frequency: 30.0
+
+    # We'll use a 2D plane model
+    two_d_mode: true
+
+    # --- FRAME PARAMETERS ---
+    # The world-fixed frame
+    map_frame: map
+
+    # The odometry frame (tracks motion since boot)
+    odom_frame: odom
+
+    # The robot's base frame
+    base_link_frame: base_link
+
+    # The EKF will publish the odom -> base_link transform
+    publish_tf: true
+
+    # --- SENSOR INPUTS ---
+
+    # Sensor 0: Wheel Odometry (from diff_drive)
+    odom0: /odom
+    odom0_config: [false, false, false,  # X, Y, Z
+                   false, false, false,  # Roll, Pitch, Yaw
+                   true,  false, false,  # X vel, Y vel, Z vel
+                   false, false, true,   # Roll vel, Pitch vel, Yaw vel
+                   false, false, false]  # X accel, Y accel, Z accel
+    odom0_differential: false
+
+
+    # Sensor 1: IMU (from imu_plugin)
+    imu0: /demo/gazebo_ros_imu_sensor/out
+    imu0_config: [false, false, false,  # X, Y, Z
+                  true,  true,  true,   # Roll, Pitch, Yaw
+                  false, false, false,  # X vel, Y vel, Z vel
+                  true,  true,  true,   # Roll vel, Pitch vel, Yaw vel
+                  true,  true,  true]   # X accel, Y accel, Z accel
+    imu0_differential: false
+    imu0_remove_gravitational_acceleration: true
