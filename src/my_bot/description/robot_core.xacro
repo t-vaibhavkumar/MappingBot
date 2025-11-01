@@ -34,7 +34,7 @@
         <visual>
             <origin xyz="0.15 0.0 0.075"/>
             <geometry>
-                <box size="0.3 0.3 0.15"/>
+                <box size="0.3 0.23 0.08"/>
             </geometry>
             <material name="white"/>
         </visual>
@@ -52,8 +52,8 @@
     <gazebo reference="chassis">
         <material>Gazebo/White</material>
     </gazebo>
-    <!-- Left Wheel Link -->
 
+    <!-- Left Wheel Joint -->
     <joint name = "left_wheel_joint" type = "continuous">
         <parent link = "base_link"/>
         <child link = "left_wheel"/>
@@ -61,16 +61,17 @@
         <axis xyz = "0 0 1"/>
     </joint>
 
+    <!-- Left Wheel Link-->
     <link name = "left_wheel">
         <visual>
             <geometry>
-                <cylinder radius="0.05" length="0.04"/>
+                <cylinder radius="0.03" length="0.07"/>
             </geometry>
             <material name='blue' />
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="0.05" length="0.04"/>
+                <cylinder radius="0.03" length="0.07"/>
             </geometry>
         </collision>
         <xacro:inertial_cylinder mass="0.1" length="0.04" radius="0.05">
@@ -82,8 +83,7 @@
     </gazebo>
 
 
-    <!-- Right Wheel Link -->
-
+    <!-- Right Wheel Joint -->
     <joint name = "right_wheel_joint" type = "continuous">
         <parent link = "base_link"/>
         <child link = "right_wheel"/>
@@ -91,16 +91,17 @@
         <axis xyz = "0 0 -1"/>
     </joint>
 
+    <!-- Right Wheel Link -->
     <link name = "right_wheel">
         <visual>
             <geometry>
-                <cylinder radius="0.05" length="0.04"/>
+                <cylinder radius="0.03" length="0.07"/>
             </geometry>
             <material name='blue' />
         </visual>
         <collision>
             <geometry>
-                <cylinder radius="0.05" length="0.04"/>
+                <cylinder radius="0.03" length="0.07"/>
             </geometry>
             <material name='blue' />
         </collision>
@@ -113,7 +114,6 @@
     </gazebo>
 
      <!-- caster Wheel Link -->
-
     <joint name = "caster_wheel_joint" type = "fixed">
         <parent link = "base_link" />
         <child link = "caster_wheel" />
@@ -142,8 +142,4 @@
         <mu1 value="0.001"/>
         <mu2 value="0.001"/>
     </gazebo>
-
-    
-   
-
 </robot>

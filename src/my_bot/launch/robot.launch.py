@@ -8,7 +8,7 @@ from ament_index_python.packages import get_package_share_directory
 
 
 import xacro
-print(os.path.join(get_package_share_directory('my_bot')))
+# print(os.path.join(get_package_share_directory('my_bot')))
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time') #use_sim_time to be true or false depending on whether you’re running with simulation (Gazebo) or real hardware.

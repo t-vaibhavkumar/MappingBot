@@ -11,7 +11,9 @@ find_package(rclcpp REQUIRED)
 # --- INSTALL PYTHON SCRIPTS (nodes) ---
 install(
   PROGRAMS
-    scripts/motor_encoder_lidar.py   # your node
+    # scripts/motor_encoder_lidar.py
+    scripts/motor_encoder.py   # your node
+    scripts/drive_distance.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
