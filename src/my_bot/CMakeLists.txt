@@ -13,7 +13,9 @@ install(
   PROGRAMS
     # scripts/motor_encoder_lidar.py
     scripts/motor_encoder.py   # your node
+    scripts/servo_lidar.py
     scripts/drive_distance.py
+    scripts/robot_serial_bridge.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

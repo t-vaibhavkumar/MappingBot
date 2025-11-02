@@ -9,12 +9,13 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
     pkg_my_bot = FindPackageShare('my_bot')
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-
+    
+    # ------------------ Robot Description ------------------
     robot_description = Command([
         'xacro ', PathJoinSubstitution([pkg_my_bot, 'description', 'robot.urdf.xacro'])
     ])
 
-    # Robot State Publisher
+    # ------------------ Robot State Publisher ------------------
     rsp_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -22,13 +23,28 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Motor + Encoder bridge
-    motor_bridge = Node(
+    unified_bridge = Node(
         package='my_bot',
-        executable='motor_encoder.py',
-        name='motor_encoder_bridge',
+        executable='robot_serial_bridge.py',
+        name='robot_serial_bridge',
         output='screen'
     )
+
+    # # ------------------ Motor + Encoder Bridge ------------------
+    # motor_bridge = Node(
+    #     package='my_bot',
+    #     executable='motor_encoder.py',
+    #     name='motor_encoder_bridge',
+    #     output='screen'
+    # )
+
+    #  # ------------------ Servo LIDAR Bridge ------------------
+    # lidar_bridge = Node(
+    #     package='my_bot',
+    #     executable='servo_lidar.py',
+    #     name='servo_lidar_bridge',
+    #     output='screen'
+    # )
 
     # ------------------ Joint State Publisher ------------------
     joint_state_publisher = Node(
@@ -39,10 +55,9 @@ def generate_launch_description():
         output='screen'
     )
 
-
     return LaunchDescription([
         DeclareLaunchArgument('use_sim_time', default_value='false'),
         rsp_node,
-        motor_bridge,
-        joint_state_publisher
+        joint_state_publisher,
+        unified_bridge
     ])

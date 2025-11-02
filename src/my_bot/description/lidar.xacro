@@ -26,7 +26,7 @@
 
     <gazebo reference="lidar_link">
         <material>Gazebo/Red</material>
-        <sensor type="ray" name="lidar_sensor">
+        <!-- <sensor type="ray" name="lidar_sensor">
             <pose>0 0 0 0 0 0</pose>
             <visualize>true</visualize>
             <update_rate>10</update_rate>
@@ -54,7 +54,7 @@
                     <frame_name>lidar_link</frame_name>
                 </ros>
             </plugin>
-        </sensor>
+        </sensor> -->
     </gazebo>
 
 </robot>
