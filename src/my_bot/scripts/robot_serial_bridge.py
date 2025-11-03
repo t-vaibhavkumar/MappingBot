@@ -64,7 +64,7 @@ class RobotSerialBridge(Node):
         self.scan_buffer = [float('inf')] * self.expected_steps
 
         # Create scan timer for continuous publishing
-        self.create_timer(0.1, self.publish_scan)  # 10 Hz
+        self.create_timer(0.5, self.publish_scan)  # 2 Hz
         self.create_timer(0.01, self.read_serial)
 
         self.get_logger().info('RobotSerialBridge started ✅')
@@ -158,6 +158,7 @@ class RobotSerialBridge(Node):
         self.odom_pub.publish(msg)
 
     # ------------------ LIDAR Handling ------------------
+
     def handle_lidar(self, parts):
         try:
             ang = float(parts[1])
@@ -165,13 +166,14 @@ class RobotSerialBridge(Node):
         except ValueError:
             return
 
+        MAX_VALID_RANGE = 0.5  # meters, depends on your sensor
         if rng_mm >= 60000:
             rng = float('inf')
         else:
             rng = rng_mm / 1000.0
             if rng < self.range_min:
                 rng = float('nan')
-            if rng > self.range_max:
+            elif rng > MAX_VALID_RANGE:
                 rng = float('inf')
 
         idx = int((ang - self.angle_min_deg) / self.step_deg)

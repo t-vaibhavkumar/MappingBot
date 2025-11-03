@@ -2,9 +2,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <joint name="lidar_joint" type="fixed">
-        <parent link="chassis"/>
+        <parent link="base_link"/>
         <child link="lidar_link"/>
-        <origin xyz="0.15 0 0.15" rpy="0 0 0"/>
+        <origin xyz="0.15 0 0.15" rpy="0 0 -1.570795"/>
     </joint>
 
     <link name="lidar_link">
@@ -13,7 +13,7 @@
                 <cylinder radius="0.05" length="0.04"/>
             </geometry>
             <material name="red"/>
-        </visual>
+        </visual> 
         <collision>
             <geometry>
                 <cylinder radius="0.05" length="0.04"/>
