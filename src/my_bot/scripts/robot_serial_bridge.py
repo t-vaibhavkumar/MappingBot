@@ -122,9 +122,21 @@ class RobotSerialBridge(Node):
 
         now = self.get_clock().now()
         dt = (now - self.last_time).nanoseconds / 1e9
-        vx = dist / dt if dt > 0 else 0.0
-        vth = dth / dt if dt > 0 else 0.0
+        vx_raw = dist / dt if dt > 0 else 0.0
+        vth_raw = dth / dt if dt > 0 else 0.0
         self.last_time = now
+
+        # --- Smooth velocities (exponential moving average) ---
+        ALPHA = 0.3  # higher = more responsive, lower = smoother
+        if not hasattr(self, 'vx_filtered'):
+            self.vx_filtered = vx_raw
+            self.vth_filtered = vth_raw
+        else:
+            self.vx_filtered = ALPHA * vx_raw + (1 - ALPHA) * self.vx_filtered
+            self.vth_filtered = ALPHA * vth_raw + (1 - ALPHA) * self.vth_filtered
+
+        vx = self.vx_filtered
+        vth = self.vth_filtered
 
         q = quaternion_from_euler(0, 0, self.th)
 

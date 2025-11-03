@@ -1,32 +1,60 @@
 slam_toolbox:
   ros__parameters:
-    use_sim_time: false
+
+    # --- Core frames and topics ---
+    use_sim_time: false                # use true only in simulation (e.g. Gazebo)
     map_frame: map
     odom_frame: odom
     base_frame: base_link
     scan_topic: /scan
 
-    # ---- Core SLAM behavior ----
-    resolution: 0.1
+    # --- Mode and core behavior ---
+    mode: mapping                      # mapping | localization | lifelong
+    enable_interactive_mode: false     # disable RViz editing (faster)
+    use_map_saver: true
+    resolution: 0.05                    # map grid resolution (10 cm per cell)
+
+    # --- Sensor limits ---
+    min_laser_range: 0.02              # ultrasonic minimum
+    max_laser_range: 0.5               # ultrasonic maximum
+    throttle_scans: 1                  # process every scan
+
+    # --- Motion update triggers ---
+    minimum_travel_distance: 0.01    # add scan after 5 cm movement
+    minimum_travel_heading: 0.02        # add scan after ~6° rotation
+
+    # --- Scan matching and filtering ---
     use_scan_matching: true
+    use_scan_barycenter: false         # not needed for single-beam scans
+    scan_buffer_size: 1                # small buffer (ultrasonic is slow)
+    scan_buffer_maximum_scan_distance: 0.5
+    link_match_minimum_response_fine: 0.05
+    link_scan_maximum_distance: 0.5
+
+    # --- Loop closure (small room tuning) ---
     do_loop_closing: true
     do_relocalization: true
-    enable_interactive_mode: false
+    loop_search_maximum_distance: 2.0
+    loop_match_minimum_response_coarse: 0.25
+    loop_match_minimum_response_fine: 0.35
+    loop_match_minimum_chain_size: 5
 
-    # ---- Motion update triggers ----
-    minimum_travel_distance: 0.05    # smaller = more frequent updates
-    minimum_travel_heading: 0.05     # radians
+    # --- Scan matcher tuning ---
+    distance_variance_penalty: 0.3
+    angle_variance_penalty: 0.5
+    coarse_search_angle_offset: 0.3
+    fine_search_angle_offset: 0.005
+    coarse_angle_resolution: 0.03
+    use_response_expansion: true
 
-    # ---- Scan processing ----
-    max_laser_range: 0.5             # your ultrasonic max range
-    scan_buffer_size: 1              # only last scan
-    scan_buffer_maximum_scan_distance: 0.5
-    link_match_minimum_response_fine: 0.1
-
-    # ---- Loop closure search ----
-    loop_search_maximum_distance: 1.0
-
-    # ---- Performance tuning ----
+    # --- Timing and performance ---
+    transform_publish_period: 0.1      # how often /map→/odom TF is published
+    map_update_interval: 2.0           # seconds between map updates
+    transform_timeout: 0.2
+    tf_buffer_duration: 20.0
     message_filter_queue: 50
     scan_queue_size: 50
-    transform_publish_period: 0.5
+
+    # --- Misc / debugging ---
+    debug_logging: false
+    stack_size_to_use: 40000000
