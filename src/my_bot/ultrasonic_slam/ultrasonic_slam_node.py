@@ -20,6 +20,7 @@ import time
 from PIL import Image
 import yaml
 import os
+from rclpy.qos import QoSProfile, QoSDurabilityPolicy, QoSReliabilityPolicy
 
 # ---------------------------
 # Utility functions
@@ -109,10 +110,15 @@ class UltrasonicSLAM(Node):
         # odom last (for initial guess)
         self.last_odom = None
 
+        qos_profile = QoSProfile(
+            depth=1,
+            durability=QoSDurabilityPolicy.TRANSIENT_LOCAL,
+            reliability=QoSReliabilityPolicy.RELIABLE
+        )
         # subscribers & publishers
         self.scan_sub = self.create_subscription(LaserScan, '/scan', self.scan_cb, 10)
         self.odom_sub = self.create_subscription(Odometry, '/odom', self.odom_cb, 20)
-        self.map_pub = self.create_publisher(OccupancyGrid, '/map', 1)
+        self.map_pub = self.create_publisher(OccupancyGrid, '/map', qos_profile)
         self.pose_pub = self.create_publisher(PoseStamped, '/slam_pose', 10)
 
         # service to save map

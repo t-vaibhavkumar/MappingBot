@@ -20,7 +20,7 @@ class RobotSerialBridge(Node):
         self.declare_parameter('baud', 115200)
         self.declare_parameter('wheel_radius', 0.03)
         self.declare_parameter('wheel_separation', 0.30)
-        self.declare_parameter('ticks_per_rev', 60.0)
+        self.declare_parameter('ticks_per_rev', 36.0)
         self.declare_parameter('range_min_m', 0.02)
         self.declare_parameter('range_max_m', 4.0)
         self.declare_parameter('angle_min_deg', 10.0)

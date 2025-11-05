@@ -211,3 +211,5 @@ build/
 install/
 log/
 
+#git pulled ingnore
+src/navigation2

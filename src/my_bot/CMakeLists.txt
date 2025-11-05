@@ -16,6 +16,7 @@ install(
     scripts/servo_lidar.py
     scripts/drive_distance.py
     scripts/robot_serial_bridge.py
+    ultrasonic_slam/ultrasonic_slam_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
