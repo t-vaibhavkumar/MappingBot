@@ -119,20 +119,6 @@ source install/setup.bash
 
 ---
 
-### 2️⃣ Build the ROS Workspace
-
-```bash
-cd ~/iot_ws
-colcon build
-```
-
-### 3️⃣ Source Your Workspace
-
-```bash
-source install/setup.bash
-```
-
----
 
 ## ▶️ Running the Robot (Recommended Order)
 
